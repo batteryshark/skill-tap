@@ -52,6 +52,67 @@ class ToolingTests(unittest.TestCase):
         self.assertEqual(report["manifests"], ["pyproject.toml"])
         self.assertEqual(report["entrypoint_candidates"], ["main.py"])
 
+    def test_code_quality_inventory_separates_tests(self) -> None:
+        script = SKILLS / "code-quality-review" / "scripts" / "code_inventory.py"
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "src").mkdir()
+            (root / "tests").mkdir()
+            (root / "src" / "app.py").write_text("def run():\n    return 1\n", encoding="utf-8")
+            (root / "tests" / "test_app.py").write_text("def test_run():\n    assert True\n", encoding="utf-8")
+            result = run_script(script, str(root), "--json")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        report = json.loads(result.stdout)
+        self.assertEqual(report["source_files"], 2)
+        self.assertEqual(report["test_files"], 1)
+        self.assertEqual(report["languages"], {"Python": 2})
+
+    def test_codebase_archeology_finds_exact_duplicates(self) -> None:
+        script = SKILLS / "codebase-archeology" / "scripts" / "inventory.py"
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "Cargo.toml").write_text("[package]\nname='fixture'\n", encoding="utf-8")
+            (root / "one.txt").write_text("same artifact\n", encoding="utf-8")
+            (root / "two.txt").write_text("same artifact\n", encoding="utf-8")
+            result = run_script(script, str(root), "--json")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        report = json.loads(result.stdout)
+        self.assertEqual(report["manifests"], ["Cargo.toml"])
+        self.assertEqual(report["duplicate_groups"][0]["paths"], ["one.txt", "two.txt"])
+
+    def test_codebase_writeup_profiles_domains_without_url_values(self) -> None:
+        script = SKILLS / "codebase-writeup" / "scripts" / "repo_profile.py"
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "package.json").write_text('{"name":"fixture"}\n', encoding="utf-8")
+            (root / "index.ts").write_text(
+                'const endpoint = "https://api.example.test/path?token=sensitive-value";\n',
+                encoding="utf-8",
+            )
+            result = run_script(script, str(root), "--json")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertNotIn("sensitive-value", result.stdout)
+        report = json.loads(result.stdout)
+        self.assertEqual(report["external_domains"], {"api.example.test": 1})
+        self.assertEqual(report["entrypoint_candidates"], ["index.ts"])
+
+    def test_github_publish_preflight_reports_secret_bearing_files(self) -> None:
+        script = SKILLS / "github-publish" / "scripts" / "preflight.py"
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "README.md").write_text("# Fixture\n", encoding="utf-8")
+            (root / "LICENSE").write_text("fixture\n", encoding="utf-8")
+            (root / ".gitignore").write_text(".env\n", encoding="utf-8")
+            (root / ".env").write_text("TOKEN=do-not-print\n", encoding="utf-8")
+            result = run_script(script, str(root), "--json")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertNotIn("do-not-print", result.stdout)
+        report = json.loads(result.stdout)
+        self.assertTrue(report["readme"])
+        self.assertTrue(report["license"])
+        self.assertTrue(report["gitignore"])
+        self.assertEqual(report["secret_bearing_files"], [".env"])
+
     def test_hygiene_scanner_reports_candidates_and_can_fail(self) -> None:
         script = SKILLS / "deliverable-hygiene" / "scripts" / "scan_hygiene.py"
         with tempfile.TemporaryDirectory() as directory:
@@ -61,6 +122,74 @@ class ToolingTests(unittest.TestCase):
         self.assertEqual(result.returncode, 1)
         self.assertIn("scratch-name", result.stdout)
         self.assertIn("debt-marker", result.stdout)
+
+    def test_intellidiff_smart_comparison_and_duplicate_detection(self) -> None:
+        script = SKILLS.parent / "utilities" / "intellidiff" / "scripts" / "intellidiff.py"
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            left = root / "left.txt"
+            right = root / "right.txt"
+            copy = root / "copy.txt"
+            left.write_bytes(b"Alpha  \r\n\r\nBeta\r\n")
+            right.write_bytes(b"Alpha\nBeta\n")
+            copy.write_bytes(right.read_bytes())
+            compared = run_script(
+                script,
+                "file",
+                str(left),
+                str(right),
+                "--smart",
+                "--ignore-newlines",
+                "--ignore-whitespace",
+                "--ignore-blank",
+                "--json",
+            )
+            duplicates = run_script(script, "duplicates", str(root), "--json")
+        self.assertEqual(compared.returncode, 0, compared.stderr)
+        self.assertEqual(json.loads(compared.stdout)["result"], "identical-normalized")
+        groups = json.loads(duplicates.stdout)["duplicate_groups"]
+        self.assertEqual(groups[0]["paths"], ["copy.txt", "right.txt"])
+
+    def test_project_tracker_scaffolds_compact_state(self) -> None:
+        script = SKILLS.parent / "productivity" / "project-tracker" / "scripts" / "project_tracker.py"
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            initialized = run_script(script, "init", str(root), "--title", "Fixture")
+            session = run_script(
+                script,
+                "session",
+                str(root),
+                "--title",
+                "First pass",
+                "--timestamp",
+                "2026-07-10-1200",
+            )
+            status = run_script(script, "status", str(root), "--json")
+            tracker_text = (root / ".project" / "tracker.md").read_text(encoding="utf-8")
+        self.assertEqual(initialized.returncode, 0, initialized.stderr)
+        self.assertEqual(session.returncode, 0, session.stderr)
+        self.assertIn("# Project Tracker: Fixture", tracker_text)
+        report = json.loads(status.stdout)
+        self.assertTrue(report["tracker_exists"])
+        self.assertEqual(report["sessions"], 1)
+
+    def test_project_retrospective_collects_only_supported_sources(self) -> None:
+        script = (
+            SKILLS.parent
+            / "productivity"
+            / "project-retrospective"
+            / "scripts"
+            / "collect_sources.py"
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "notes.md").write_text("# Notes\n", encoding="utf-8")
+            (root / "program.py").write_text("print('not a retro source')\n", encoding="utf-8")
+            result = run_script(script, str(root), "--json")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        report = json.loads(result.stdout)
+        self.assertEqual(report["files_found"], 1)
+        self.assertTrue(report["files"][0]["path"].endswith("notes.md"))
 
     def test_publish_scanner_redacts_suspected_secret_values(self) -> None:
         script = SKILLS / "publish-ready" / "scripts" / "recon.py"

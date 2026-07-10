@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+skill_dir=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+script="$skill_dir/scripts/preflight.py"
+
+if command -v uv >/dev/null 2>&1; then
+  exec uv run --script "$script" "$@"
+fi
+exec python3 "$script" "$@"
