@@ -1,10 +1,12 @@
 # Skills Tap
 
-![Skills Tap — a retro comic-book developer mascot](assets/skills-tap.png)
+![Skills Tap — a retro comic-book mascot](assets/skills-tap.png)
 
-Skills Tap is a public collection of portable skills for software-development agents. Each skill is self-contained, readable without a specific agent platform, and backed by small command-line tools where deterministic checks help.
+Skills Tap is a public collection of portable, reusable skills for agents. It is a general-purpose catalog of repeatable workflows, organized by category as it grows. Each skill is self-contained, readable without a specific agent platform, and backed by small command-line tools where deterministic checks help.
 
-## Skills
+## Current skills
+
+The first collection lives under `skills/development/`; the repository itself is not limited to development work.
 
 | Skill | Use it to |
 |---|---|
