@@ -15,6 +15,7 @@ Skills Tap is a public collection of portable, reusable skills for agents. It is
 | [`codebase-archeology`](skills/development/codebase-archeology/) | Map inherited or archived projects and decide what to preserve, merge, or retire. |
 | [`codebase-writeup`](skills/development/codebase-writeup/) | Produce an evidence-backed technical explanation of how a codebase works. |
 | [`deliverable-hygiene`](skills/development/deliverable-hygiene/) | Keep a repository shaped like finished work and recover one that has accumulated process residue. |
+| [`engineering-diagrams`](skills/development/engineering-diagrams/) | Create evidence-backed system, component, data-flow, sequence, state, and trust-boundary diagrams. |
 | [`github-publish`](skills/development/github-publish/) | Preflight and publish a local project to GitHub without leaking or staging unrelated state. |
 | [`publish-ready`](skills/development/publish-ready/) | Run a final, evidence-backed cleanup before sharing or releasing a repository. |
 | [`work-product-audit`](skills/development/work-product-audit/) | Find public prose that leaks internal reasoning, defensive framing, or generated-sounding filler. |
@@ -23,6 +24,7 @@ Skills Tap is a public collection of portable, reusable skills for agents. It is
 
 | Skill | Use it to |
 |---|---|
+| [`decision-records`](skills/productivity/decision-records/) | Preserve consequential choices, constraints, alternatives, consequences, and reconsideration criteria. |
 | [`project-retrospective`](skills/productivity/project-retrospective/) | Extract concrete lessons and improvements from completed or paused work. |
 | [`project-tracker`](skills/productivity/project-tracker/) | Maintain compact durable project memory across sessions and handoffs. |
 

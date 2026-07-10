@@ -26,6 +26,16 @@ An abstraction removes repetition or hides a stable boundary without scattering 
 
 Documentation, tests, manifests, and runtime behavior reinforce the same model. Stale or competing explanations count as a coherence cost.
 
+### Onboarding usability
+
+A capable newcomer can establish purpose, setup, verification commands, primary entry points, ownership, and a safe change location without relying on hidden project history. Required domain knowledge is named; project-specific tribal knowledge is not mistaken for expertise.
+
+## Uncertainty register
+
+For an important claim that cannot be established, record the claim, existing evidence, missing evidence, change risk, and the smallest owner question or experiment that would settle it. Do not convert a low-confidence inference into a negative score.
+
+If the user requests a scorecard, prefer evidence bands such as clear, usable with friction, materially unclear, and not evaluated. Explain each band; avoid a single aggregate number that hides unsupported dimensions.
+
 ## Finding taxonomy
 
 - **Intentional tradeoff:** a conscious choice made for a concrete constraint.

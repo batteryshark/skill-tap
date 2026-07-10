@@ -40,6 +40,7 @@ Updated: {date}
 - Objective:
 - Status:
 - Main constraint:
+- Blocked on:
 - Next action:
 
 ## Active workstreams

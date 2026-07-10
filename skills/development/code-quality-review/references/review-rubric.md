@@ -22,6 +22,8 @@
 - One local scope mixes policy, parsing, validation, I/O, mutation, and presentation.
 - A model exposes representation while also claiming to protect invariants.
 - Comments are stale, nonlocal, repetitive, or compensating for avoidable structure.
+- A comment asserts intent that nearby behavior, tests, or current constraints contradict.
+- Surprising or hazardous behavior lacks the local rationale needed to change it safely.
 
 ### Boundaries and dependencies
 
@@ -29,6 +31,7 @@
 - Construction, environment parsing, and framework wiring obscure runtime behavior.
 - External data, errors, time, filesystem, or network effects are not normalized at a boundary.
 - Abstractions add indirection without reducing coupling or concepts.
+- Pass-through layers, unused flexibility, or duplicated policy increase the number of concepts without protecting a supported variation or boundary.
 
 ### Consistency and layout
 

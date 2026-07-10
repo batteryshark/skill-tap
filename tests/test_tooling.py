@@ -9,7 +9,10 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILLS = ROOT / "skills" / "development"
+SKILLS_ROOT = ROOT / "skills"
+DEVELOPMENT = SKILLS_ROOT / "development"
+PRODUCTIVITY = SKILLS_ROOT / "productivity"
+UTILITIES = SKILLS_ROOT / "utilities"
 
 
 def run_script(script: Path, *args: str) -> subprocess.CompletedProcess[str]:
@@ -26,7 +29,14 @@ class ToolingTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as cache:
             env = os.environ.copy()
             env["UV_CACHE_DIR"] = cache
-            for skill in sorted(path for path in SKILLS.iterdir() if path.is_dir()):
+            skill_packages = sorted(
+                path
+                for category in SKILLS_ROOT.iterdir()
+                if category.is_dir()
+                for path in category.iterdir()
+                if path.is_dir() and (path / "SKILL.md").is_file()
+            )
+            for skill in skill_packages:
                 command = skill / "bin" / skill.name
                 with self.subTest(command=command):
                     result = subprocess.run(
@@ -40,7 +50,7 @@ class ToolingTests(unittest.TestCase):
                     self.assertIn("usage:", result.stdout.lower())
 
     def test_architecture_map_emits_machine_readable_inventory(self) -> None:
-        script = SKILLS / "architecture-for-comprehension" / "scripts" / "map_repository.py"
+        script = DEVELOPMENT / "architecture-for-comprehension" / "scripts" / "map_repository.py"
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "pyproject.toml").write_text("[project]\nname='fixture'\n", encoding="utf-8")
@@ -53,7 +63,7 @@ class ToolingTests(unittest.TestCase):
         self.assertEqual(report["entrypoint_candidates"], ["main.py"])
 
     def test_code_quality_inventory_separates_tests(self) -> None:
-        script = SKILLS / "code-quality-review" / "scripts" / "code_inventory.py"
+        script = DEVELOPMENT / "code-quality-review" / "scripts" / "code_inventory.py"
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "src").mkdir()
@@ -68,7 +78,7 @@ class ToolingTests(unittest.TestCase):
         self.assertEqual(report["languages"], {"Python": 2})
 
     def test_codebase_archeology_finds_exact_duplicates(self) -> None:
-        script = SKILLS / "codebase-archeology" / "scripts" / "inventory.py"
+        script = DEVELOPMENT / "codebase-archeology" / "scripts" / "inventory.py"
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "Cargo.toml").write_text("[package]\nname='fixture'\n", encoding="utf-8")
@@ -81,7 +91,7 @@ class ToolingTests(unittest.TestCase):
         self.assertEqual(report["duplicate_groups"][0]["paths"], ["one.txt", "two.txt"])
 
     def test_codebase_writeup_profiles_domains_without_url_values(self) -> None:
-        script = SKILLS / "codebase-writeup" / "scripts" / "repo_profile.py"
+        script = DEVELOPMENT / "codebase-writeup" / "scripts" / "repo_profile.py"
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "package.json").write_text('{"name":"fixture"}\n', encoding="utf-8")
@@ -96,8 +106,35 @@ class ToolingTests(unittest.TestCase):
         self.assertEqual(report["external_domains"], {"api.example.test": 1})
         self.assertEqual(report["entrypoint_candidates"], ["index.ts"])
 
+    def test_engineering_diagram_scaffold_writes_selected_view(self) -> None:
+        script = DEVELOPMENT / "engineering-diagrams" / "scripts" / "scaffold_diagram.py"
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "request-flow.md"
+            result = run_script(
+                script,
+                "sequence",
+                "--title",
+                "Request flow",
+                "--output",
+                str(output),
+            )
+            content = output.read_text(encoding="utf-8")
+            second = run_script(
+                script,
+                "sequence",
+                "--title",
+                "Request flow",
+                "--output",
+                str(output),
+            )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("# Request flow", content)
+        self.assertIn("sequenceDiagram", content)
+        self.assertEqual(second.returncode, 2)
+        self.assertIn("refusing to overwrite", second.stderr)
+
     def test_github_publish_preflight_reports_secret_bearing_files(self) -> None:
-        script = SKILLS / "github-publish" / "scripts" / "preflight.py"
+        script = DEVELOPMENT / "github-publish" / "scripts" / "preflight.py"
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "README.md").write_text("# Fixture\n", encoding="utf-8")
@@ -114,7 +151,7 @@ class ToolingTests(unittest.TestCase):
         self.assertEqual(report["secret_bearing_files"], [".env"])
 
     def test_hygiene_scanner_reports_candidates_and_can_fail(self) -> None:
-        script = SKILLS / "deliverable-hygiene" / "scripts" / "scan_hygiene.py"
+        script = DEVELOPMENT / "deliverable-hygiene" / "scripts" / "scan_hygiene.py"
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "handoff-notes.md"
             path.write_text("TODO: remove the temporary report\n", encoding="utf-8")
@@ -124,7 +161,7 @@ class ToolingTests(unittest.TestCase):
         self.assertIn("debt-marker", result.stdout)
 
     def test_intellidiff_smart_comparison_and_duplicate_detection(self) -> None:
-        script = SKILLS.parent / "utilities" / "intellidiff" / "scripts" / "intellidiff.py"
+        script = UTILITIES / "intellidiff" / "scripts" / "intellidiff.py"
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             left = root / "left.txt"
@@ -151,7 +188,7 @@ class ToolingTests(unittest.TestCase):
         self.assertEqual(groups[0]["paths"], ["copy.txt", "right.txt"])
 
     def test_project_tracker_scaffolds_compact_state(self) -> None:
-        script = SKILLS.parent / "productivity" / "project-tracker" / "scripts" / "project_tracker.py"
+        script = PRODUCTIVITY / "project-tracker" / "scripts" / "project_tracker.py"
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             initialized = run_script(script, "init", str(root), "--title", "Fixture")
@@ -173,10 +210,30 @@ class ToolingTests(unittest.TestCase):
         self.assertTrue(report["tracker_exists"])
         self.assertEqual(report["sessions"], 1)
 
+    def test_decision_record_scaffold_preserves_lifecycle_fields(self) -> None:
+        script = PRODUCTIVITY / "decision-records" / "scripts" / "scaffold_record.py"
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "queue.md"
+            result = run_script(
+                script,
+                "--title",
+                "Choose the job queue",
+                "--status",
+                "accepted",
+                "--date",
+                "2026-07-10",
+                "--output",
+                str(output),
+            )
+            content = output.read_text(encoding="utf-8")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("# Decision: Choose the job queue", content)
+        self.assertIn("- Status: accepted", content)
+        self.assertIn("## Reconsider when", content)
+
     def test_project_retrospective_collects_only_supported_sources(self) -> None:
         script = (
-            SKILLS.parent
-            / "productivity"
+            PRODUCTIVITY
             / "project-retrospective"
             / "scripts"
             / "collect_sources.py"
@@ -192,7 +249,7 @@ class ToolingTests(unittest.TestCase):
         self.assertTrue(report["files"][0]["path"].endswith("notes.md"))
 
     def test_publish_scanner_redacts_suspected_secret_values(self) -> None:
-        script = SKILLS / "publish-ready" / "scripts" / "recon.py"
+        script = DEVELOPMENT / "publish-ready" / "scripts" / "recon.py"
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "config.py").write_text('api_key = "supersecretvalue"\n', encoding="utf-8")
@@ -202,13 +259,13 @@ class ToolingTests(unittest.TestCase):
         self.assertIn("suspected secret value (redacted)", result.stdout)
 
     def test_work_product_scanner_rejects_missing_paths(self) -> None:
-        script = SKILLS / "work-product-audit" / "scripts" / "audit_text.py"
+        script = DEVELOPMENT / "work-product-audit" / "scripts" / "audit_text.py"
         result = run_script(script, "/path/that/does/not/exist")
         self.assertEqual(result.returncode, 2)
         self.assertIn("path does not exist", result.stderr)
 
     def test_work_product_scanner_fail_mode(self) -> None:
-        script = SKILLS / "work-product-audit" / "scripts" / "audit_text.py"
+        script = DEVELOPMENT / "work-product-audit" / "scripts" / "audit_text.py"
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "README.md"
             path.write_text("The point is that this unlocks everything.\n", encoding="utf-8")

@@ -18,6 +18,10 @@ Summarize languages, frameworks, runtime, build system, package management, stor
 
 Describe major modules and ownership boundaries. Trace control and data through at least one representative execution path. Explain where configuration, state, I/O, and side effects enter.
 
+## Getting started and safe change
+
+For onboarding or handoff deliverables, provide the shortest evidence-backed path from checkout to a successful verification. Point to common change locations, their tests, generated boundaries, and any compatibility or operational constraint a contributor must not discover by accident.
+
 ## External boundaries
 
 Describe APIs, databases, queues, filesystems, platform services, SDKs, and remote domains. Explain what each boundary is used for and how failures or data shapes are translated.

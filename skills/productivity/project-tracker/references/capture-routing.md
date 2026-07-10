@@ -14,6 +14,10 @@ Use for actionable backlog, ownership, priority, status, collaboration, and work
 
 Put load-bearing behavior, invariants, external contracts, and maintainer rationale next to the thing they govern. The tracker may point there but should not become the only source of truth.
 
+## Decision record
+
+Use a durable decision record when future collaborators need the original context, constraints, alternatives, consequences, and reconsideration criteria. Keep only the current consequence and a link in the project tracker.
+
 ## Calendar or reminder system
 
 Use for work tied to a date, notification, or external obligation. Keep only the project consequence in the tracker.

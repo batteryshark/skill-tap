@@ -12,6 +12,7 @@ Updated: YYYY-MM-DD
 - Objective:
 - Status:
 - Main constraint:
+- Blocked on:
 - Next action:
 
 ## Active workstreams
@@ -19,7 +20,9 @@ Updated: YYYY-MM-DD
 ### Workstream name
 
 - Status: active | paused | blocked
+- Owner:
 - Current evidence:
+- Completion evidence:
 - Next action:
 - Stop condition:
 

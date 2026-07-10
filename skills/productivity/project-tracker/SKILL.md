@@ -24,7 +24,7 @@ bin/project-tracker status PROJECT
 1. Read any existing tracker before updating it.
 2. Extract durable facts from the current conversation and project evidence: objective, pivots, attempts, results, artifacts, decisions, questions, and next actions.
 3. Inspect the project enough to ground claims in files, commands, logs, or outputs. Mark unknown history rather than reconstructing it from guesswork.
-4. Update `.project/tracker.md` so current state is visible without reading old sessions.
+4. Update `.project/tracker.md` so current state, ownership, blockers, and the evidence that would close each active workstream are visible without reading old sessions.
 5. Add a timestamped session note only when raw evidence, failed approaches, or detailed results will materially help future work.
 6. Move resolved questions and completed work to concise history; do not let the active dashboard grow indefinitely.
 7. Route side thoughts with [`references/capture-routing.md`](references/capture-routing.md) instead of copying every thought into the tracker.
@@ -35,6 +35,7 @@ bin/project-tracker status PROJECT
 - Separate observed facts, decisions, theories, and unknowns.
 - Never store credentials, tokens, cookies, private keys, or unrelated personal data.
 - Preserve useful failed approaches and reconsideration triggers, but compress raw process history.
+- Keep a concise decision summary in the tracker when it changes project direction. Put durable rationale that should outlive the active project state in the project's decision-record convention and link it from the tracker.
 - Keep actionable backlog in the project's established issue or task system when one exists.
 - Do not create many ledger files by default; split only when the dashboard has a proven maintenance problem.
 
