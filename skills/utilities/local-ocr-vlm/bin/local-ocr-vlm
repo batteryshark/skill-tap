@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+
+skill_dir=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+script="$skill_dir/scripts/ocr.mjs"
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "local-ocr-vlm requires Node.js 18+ (provides the global fetch API)." >&2
+  exit 1
+fi
+
+exec node "$script" "$@"
