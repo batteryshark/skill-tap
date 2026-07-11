@@ -30,11 +30,7 @@ class ToolingTests(unittest.TestCase):
             env = os.environ.copy()
             env["UV_CACHE_DIR"] = cache
             skill_packages = sorted(
-                path
-                for category in SKILLS_ROOT.iterdir()
-                if category.is_dir()
-                for path in category.iterdir()
-                if path.is_dir() and (path / "SKILL.md").is_file()
+                skill_file.parent for skill_file in SKILLS_ROOT.rglob("SKILL.md")
             )
             for skill in skill_packages:
                 command = skill / "bin" / skill.name

@@ -69,6 +69,12 @@ def validate_links(path: Path) -> list[str]:
 def validate_skill(skill_dir: Path) -> list[str]:
     errors: list[str] = []
     relative = skill_dir.relative_to(ROOT)
+    package_parts = skill_dir.relative_to(SKILLS_ROOT).parts
+    if len(package_parts) < 2:
+        errors.append(f"{relative}: skill must be below a category")
+    for container in package_parts[:-1]:
+        if not NAME_RE.fullmatch(container):
+            errors.append(f"{relative}: invalid category or group name: {container}")
     name = skill_dir.name
     if not NAME_RE.fullmatch(name):
         errors.append(f"{relative}: invalid directory name")
@@ -124,7 +130,7 @@ def validate_skill(skill_dir: Path) -> list[str]:
 
 
 def main() -> int:
-    skill_files = sorted(SKILLS_ROOT.glob("*/*/SKILL.md"))
+    skill_files = sorted(SKILLS_ROOT.rglob("SKILL.md"))
     if not skill_files:
         print("No skills found", file=sys.stderr)
         return 1

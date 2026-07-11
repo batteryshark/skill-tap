@@ -15,20 +15,20 @@ Skills Tap is a public collection of portable, reusable skills for agents. It is
 | [`codebase-archeology`](skills/development/codebase-archeology/) | Map inherited or archived projects and decide what to preserve, merge, or retire. |
 | [`codebase-writeup`](skills/development/codebase-writeup/) | Produce an evidence-backed technical explanation of how a codebase works. |
 | [`deliverable-hygiene`](skills/development/deliverable-hygiene/) | Keep a repository shaped like finished work and recover one that has accumulated process residue. |
-| [`agent-create`](skills/development/agent-create/) | Scaffold a portable Markdown role prompt with explicit inputs, constraints, and output contract. |
+| [`agent-create`](skills/development/skill-development/agent-create/) | Scaffold a portable Markdown role prompt with explicit inputs, constraints, and output contract. |
 | [`excalidraw`](skills/development/excalidraw/) | Create and validate editable Excalidraw diagram JSON before rendering and delivery. |
 | [`engineering-diagrams`](skills/development/engineering-diagrams/) | Create evidence-backed system, component, data-flow, sequence, state, and trust-boundary diagrams. |
 | [`github-publish`](skills/development/github-publish/) | Preflight and publish a local project to GitHub without leaking or staging unrelated state. |
 | [`publish-ready`](skills/development/publish-ready/) | Run a final, evidence-backed cleanup before sharing or releasing a repository. |
-| [`mcp-elicitations`](skills/development/mcp-elicitations/) | Build and test protocol elicitations and FastMCP Apps interaction boundaries. |
-| [`mcp-server-create`](skills/development/mcp-server-create/) | Scaffold a library-first FastMCP 3 server with portable configuration and tests. |
-| [`mcp-server-design`](skills/development/mcp-server-design/) | Design providers, transforms, auth, tasks, outputs, discovery, and safety boundaries. |
-| [`mcp-server-upgrade`](skills/development/mcp-server-upgrade/) | Upgrade an MCP server while preserving and verifying observable compatibility. |
-| [`mcp-testing`](skills/development/mcp-testing/) | Test domain logic, MCP components, interactions, security, lifecycle, and transports. |
-| [`skill-create`](skills/development/skill-create/) | Scaffold a complete portable skill package that satisfies this tap's contract. |
-| [`skill-node-portability`](skills/development/skill-node-portability/) | Audit Node.js skill dependencies, lockfiles, launchers, and compiled artifacts. |
-| [`skill-python-portability`](skills/development/skill-python-portability/) | Audit Python skill imports, PEP 723 metadata, dependencies, and launchers. |
-| [`skill-refine`](skills/development/skill-refine/) | Audit and refine a skill package against the public portability contract. |
+| [`mcp-elicitations`](skills/development/mcp/mcp-elicitations/) | Build and test protocol elicitations and FastMCP Apps interaction boundaries. |
+| [`mcp-server-create`](skills/development/mcp/mcp-server-create/) | Scaffold a library-first FastMCP 3 server with portable configuration and tests. |
+| [`mcp-server-design`](skills/development/mcp/mcp-server-design/) | Design providers, transforms, auth, tasks, outputs, discovery, and safety boundaries. |
+| [`mcp-server-upgrade`](skills/development/mcp/mcp-server-upgrade/) | Upgrade an MCP server while preserving and verifying observable compatibility. |
+| [`mcp-testing`](skills/development/mcp/mcp-testing/) | Test domain logic, MCP components, interactions, security, lifecycle, and transports. |
+| [`skill-create`](skills/development/skill-development/skill-create/) | Scaffold a complete portable skill package that satisfies this tap's contract. |
+| [`skill-node-portability`](skills/development/skill-development/skill-node-portability/) | Audit Node.js skill dependencies, lockfiles, launchers, and compiled artifacts. |
+| [`skill-python-portability`](skills/development/skill-development/skill-python-portability/) | Audit Python skill imports, PEP 723 metadata, dependencies, and launchers. |
+| [`skill-refine`](skills/development/skill-development/skill-refine/) | Audit and refine a skill package against the public portability contract. |
 | [`work-product-audit`](skills/development/work-product-audit/) | Find public prose that leaks internal reasoning, defensive framing, or generated-sounding filler. |
 
 ### Productivity
@@ -70,7 +70,7 @@ skills/development/publish-ready/bin/publish-ready .
 
 ## Add a skill
 
-Put new skills under a broad category in `skills/`, follow the [skill contract](SKILL-CONTRACT.md), and run:
+Put new skills under a broad category in `skills/`, optionally nest related skills in organizational groups, follow the [skill contract](SKILL-CONTRACT.md), and run:
 
 ```sh
 python3 scripts/validate_skills.py

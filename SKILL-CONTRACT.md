@@ -4,7 +4,25 @@ Skills in this repository are portable packages. They must not depend on one age
 
 ## Package layout
 
-Place each skill at `skills/<category>/<skill-name>/` with this shape:
+Place each skill at `skills/<category>[/<group>...]/<skill-name>/` with this shape:
+
+```text
+skills/
+└── development/
+    └── related-workflows/    # optional organizational group
+        ├── first-skill/
+        └── second-skill/
+```
+
+Categories and optional groups may be nested to any depth. Skill discovery is
+recursive: every `SKILL.md` below `skills/` identifies a skill package rooted
+at its parent directory. Category and group names use lowercase letters,
+digits, and hyphens.
+
+Groups are organizational only. A skill must not depend on a parent group or a
+sibling skill; copying its own directory must preserve all of its behavior.
+
+Each skill package has this shape:
 
 ```text
 skill-name/
