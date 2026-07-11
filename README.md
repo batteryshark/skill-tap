@@ -38,6 +38,7 @@ Skills Tap is a public collection of portable, reusable skills for agents. It is
 | [`decision-records`](skills/productivity/decision-records/) | Preserve consequential choices, constraints, alternatives, consequences, and reconsideration criteria. |
 | [`project-retrospective`](skills/productivity/project-retrospective/) | Extract concrete lessons and improvements from completed or paused work. |
 | [`project-tracker`](skills/productivity/project-tracker/) | Maintain compact durable project memory across sessions and handoffs. |
+| [`claude-session-handoff`](skills/productivity/claude-session-handoff/) | Build a redacted, evidence-backed continuation brief from a Claude Code JSONL transcript. |
 | [`apple-reminders`](skills/productivity/apple-reminders/) | Manage Apple Reminders through a native EventKit command with mutation safeguards. |
 | [`reverse-brief`](skills/productivity/reverse-brief/) | Reconstruct an evidence-labeled implementation brief from existing artifacts. |
 
