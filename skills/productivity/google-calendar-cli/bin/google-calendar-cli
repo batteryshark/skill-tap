@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+case "${1:-}" in
+  -h|--help)
+    printf '%s\n' 'usage: google-calendar-cli {auth,calendars,events,freebusy,plan-create,plan-delete,apply-plan} ...'
+    exit 0
+    ;;
+esac
+SKILL_DIR=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+exec uv run --script "$SKILL_DIR/scripts/gcal_cli.py" "$@"
