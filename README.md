@@ -15,9 +15,20 @@ Skills Tap is a public collection of portable, reusable skills for agents. It is
 | [`codebase-archeology`](skills/development/codebase-archeology/) | Map inherited or archived projects and decide what to preserve, merge, or retire. |
 | [`codebase-writeup`](skills/development/codebase-writeup/) | Produce an evidence-backed technical explanation of how a codebase works. |
 | [`deliverable-hygiene`](skills/development/deliverable-hygiene/) | Keep a repository shaped like finished work and recover one that has accumulated process residue. |
+| [`agent-create`](skills/development/agent-create/) | Scaffold a portable Markdown role prompt with explicit inputs, constraints, and output contract. |
+| [`excalidraw`](skills/development/excalidraw/) | Create and validate editable Excalidraw diagram JSON before rendering and delivery. |
 | [`engineering-diagrams`](skills/development/engineering-diagrams/) | Create evidence-backed system, component, data-flow, sequence, state, and trust-boundary diagrams. |
 | [`github-publish`](skills/development/github-publish/) | Preflight and publish a local project to GitHub without leaking or staging unrelated state. |
 | [`publish-ready`](skills/development/publish-ready/) | Run a final, evidence-backed cleanup before sharing or releasing a repository. |
+| [`mcp-elicitations`](skills/development/mcp-elicitations/) | Build and test protocol elicitations and FastMCP Apps interaction boundaries. |
+| [`mcp-server-create`](skills/development/mcp-server-create/) | Scaffold a library-first FastMCP 3 server with portable configuration and tests. |
+| [`mcp-server-design`](skills/development/mcp-server-design/) | Design providers, transforms, auth, tasks, outputs, discovery, and safety boundaries. |
+| [`mcp-server-upgrade`](skills/development/mcp-server-upgrade/) | Upgrade an MCP server while preserving and verifying observable compatibility. |
+| [`mcp-testing`](skills/development/mcp-testing/) | Test domain logic, MCP components, interactions, security, lifecycle, and transports. |
+| [`skill-create`](skills/development/skill-create/) | Scaffold a complete portable skill package that satisfies this tap's contract. |
+| [`skill-node-portability`](skills/development/skill-node-portability/) | Audit Node.js skill dependencies, lockfiles, launchers, and compiled artifacts. |
+| [`skill-python-portability`](skills/development/skill-python-portability/) | Audit Python skill imports, PEP 723 metadata, dependencies, and launchers. |
+| [`skill-refine`](skills/development/skill-refine/) | Audit and refine a skill package against the public portability contract. |
 | [`work-product-audit`](skills/development/work-product-audit/) | Find public prose that leaks internal reasoning, defensive framing, or generated-sounding filler. |
 
 ### Productivity
@@ -27,12 +38,20 @@ Skills Tap is a public collection of portable, reusable skills for agents. It is
 | [`decision-records`](skills/productivity/decision-records/) | Preserve consequential choices, constraints, alternatives, consequences, and reconsideration criteria. |
 | [`project-retrospective`](skills/productivity/project-retrospective/) | Extract concrete lessons and improvements from completed or paused work. |
 | [`project-tracker`](skills/productivity/project-tracker/) | Maintain compact durable project memory across sessions and handoffs. |
+| [`apple-reminders`](skills/productivity/apple-reminders/) | Manage Apple Reminders through a native EventKit command with mutation safeguards. |
+| [`reverse-brief`](skills/productivity/reverse-brief/) | Reconstruct an evidence-labeled implementation brief from existing artifacts. |
 
 ### Utilities
 
 | Skill | Use it to |
 |---|---|
 | [`intellidiff`](skills/utilities/intellidiff/) | Compare files or folders, calculate SHA-256 hashes, and find exact duplicates. |
+| [`docker-cleanup`](skills/utilities/docker-cleanup/) | Survey and selectively reclaim Docker disk usage without broad implicit deletion. |
+| [`external-ip`](skills/utilities/external-ip/) | Cross-check public IPv4 or IPv6 observations through multiple HTTPS services. |
+| [`nano-banana-image`](skills/utilities/nano-banana-image/) | Generate or edit images with Gemini using portable environment credentials. |
+| [`system-recon`](skills/utilities/system-recon/) | Collect a bounded read-only system inventory without harvesting secrets. |
+| [`windows-ai-controls`](skills/utilities/windows-ai-controls/) | Audit and plan reversible Windows AI policy changes for a specific build. |
+| [`windows-elevation`](skills/utilities/windows-elevation/) | Plan the narrowest Windows elevation path with a guarded SYSTEM fallback. |
 
 ## Use a skill
 
