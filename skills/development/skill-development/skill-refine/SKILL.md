@@ -1,6 +1,6 @@
 ---
 name: skill-refine
-description: Audit and improve a portable skill for contract compliance, triggering, progressive disclosure, script correctness, portability, safety, and verification. Use for skill reviews, pre-publication checks, broken-skill diagnosis, quality scoring, or modernizing an older package to the Skills Tap contract.
+description: Audit and improve a portable skill for contract compliance, triggering, progressive disclosure, script correctness, portability, safety, and verification. Use for skill reviews, pre-publication checks, broken-skill diagnosis, quality scoring, or modernizing an older package to the Skill Tap contract.
 ---
 
 # Refine a Portable Skill

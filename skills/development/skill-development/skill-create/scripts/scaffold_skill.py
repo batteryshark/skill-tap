@@ -3,7 +3,7 @@
 # requires-python = ">=3.11"
 # dependencies = []
 # ///
-"""Scaffold a standalone skill that conforms to the Skills Tap contract."""
+"""Scaffold a standalone skill that conforms to the Skill Tap contract."""
 
 from __future__ import annotations
 

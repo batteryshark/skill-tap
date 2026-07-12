@@ -1,6 +1,6 @@
 ---
 name: skill-create
-description: Scaffold a complete portable skill package that follows the Skills Tap contract. Use when creating a new reusable agent skill, turning a repeated workflow into a skill, or generating SKILL.md plus portable agents, a matching bin command, PEP 723 scripts, references, and validation-ready structure.
+description: Scaffold a complete portable skill package that follows the Skill Tap contract. Use when creating a new reusable agent skill, turning a repeated workflow into a skill, or generating SKILL.md plus portable agents, a matching bin command, PEP 723 scripts, references, and validation-ready structure.
 ---
 
 # Create a Portable Skill

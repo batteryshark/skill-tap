@@ -1,10 +1,10 @@
-# Skills Tap
+# Skill Tap
 
 <p align="center">
-  <img src="assets/skills-tap-480.png" width="480" alt="Skills Tap — a retro comic-book mascot">
+  <img src="assets/skills-tap-480.png" width="480" alt="Skill Tap — a retro comic-book mascot">
 </p>
 
-Skills Tap is a public collection of portable, reusable skills for agents. It is a general-purpose catalog of repeatable workflows, organized by category as it grows. Each skill is self-contained, readable without a specific agent platform, and backed by small command-line tools where deterministic checks help.
+Skill Tap is a public collection of portable, reusable skills for agents. It is a general-purpose catalog of repeatable workflows, organized by category as it grows. Each skill is self-contained, readable without a specific agent platform, and backed by small command-line tools where deterministic checks help.
 
 ## Skills
 
@@ -61,8 +61,8 @@ Skills Tap is a public collection of portable, reusable skills for agents. It is
 Copy a complete skill directory into your agent's skill path, or point the agent directly at its `SKILL.md`. Keep the directory intact: scripts, references, and role prompts are part of the skill.
 
 ```sh
-git clone https://github.com/batteryshark/skills-tap.git
-cp -R skills-tap/skills/development/publish-ready /path/to/your/agent/skills/
+git clone https://github.com/batteryshark/skill-tap.git
+cp -R skill-tap/skills/development/publish-ready /path/to/your/agent/skills/
 ```
 
 Every Python tool can run with `uv` or the system Python. The executable in each skill's `bin/` directory prefers `uv` and falls back to `python3` when the tool has no third-party dependencies.

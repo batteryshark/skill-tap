@@ -3,7 +3,7 @@
 # requires-python = ">=3.11"
 # dependencies = []
 # ///
-"""Audit a skill against the portable Skills Tap package contract."""
+"""Audit a skill against the portable Skill Tap package contract."""
 
 from __future__ import annotations
 
