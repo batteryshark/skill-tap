@@ -1,6 +1,8 @@
 # Skills Tap
 
-![Skills Tap — a retro comic-book mascot](assets/skills-tap-480.png)
+<p align="center">
+  <img src="assets/skills-tap-480.png" width="480" alt="Skills Tap — a retro comic-book mascot">
+</p>
 
 Skills Tap is a public collection of portable, reusable skills for agents. It is a general-purpose catalog of repeatable workflows, organized by category as it grows. Each skill is self-contained, readable without a specific agent platform, and backed by small command-line tools where deterministic checks help.
 
