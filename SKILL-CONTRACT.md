@@ -76,7 +76,7 @@ Keep `SKILL.md` concise. Put extended rubrics, examples, and variant-specific gu
 
 Scripts report evidence, not conclusions that require judgment. Destructive actions require an explicit workflow step, a reviewable scope, and a recovery path.
 
-Do not add a README inside an individual skill. The root README is the catalog; `SKILL.md` is the package entry point.
+A skill may include a `README.md` for humans browsing the repository. Tooling and agents ignore it: `SKILL.md` is the package entry point and the only authority on workflow. A README orients and links; it does not restate rules or instructions from `SKILL.md` or `references/`. The root README remains the catalog.
 
 ## Validation
 
