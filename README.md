@@ -43,6 +43,7 @@ Skill Tap is a public collection of portable, reusable skills for agents. It is 
 | [`claude-session-handoff`](skills/productivity/claude-session-handoff/) | Build a redacted, evidence-backed continuation brief from a Claude Code JSONL transcript. |
 | [`apple-reminders`](skills/productivity/apple-reminders/) | Manage Apple Reminders through a native EventKit command with mutation safeguards. |
 | [`reverse-brief`](skills/productivity/reverse-brief/) | Reconstruct an evidence-labeled implementation brief from existing artifacts. |
+| [`goal-epic-craft`](skills/productivity/goal-epic-craft/) | Turn rough intent into a bounded goal or epic, grade it against a standard, or split it into vertical slices. |
 
 ### Utilities
 
