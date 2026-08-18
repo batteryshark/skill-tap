@@ -27,6 +27,8 @@ Skill Tap is a public collection of portable, reusable skills for agents. It is 
 | [`mcp-server-design`](skills/development/mcp/mcp-server-design/) | Design providers, transforms, auth, tasks, outputs, discovery, and safety boundaries. |
 | [`mcp-server-upgrade`](skills/development/mcp/mcp-server-upgrade/) | Upgrade an MCP server while preserving and verifying observable compatibility. |
 | [`mcp-testing`](skills/development/mcp/mcp-testing/) | Test domain logic, MCP components, interactions, security, lifecycle, and transports. |
+| [`norman`](skills/development/interface-design/norman/) | Apply interface-design principles while building: signifiers, interaction cost, and controls that earn their place. |
+| [`norman-audit`](skills/development/interface-design/norman-audit/) | Audit an interface from source for eight failure classes, ranked worst first with fixes. |
 | [`skill-create`](skills/development/skill-development/skill-create/) | Scaffold a complete portable skill package that satisfies this tap's contract. |
 | [`skill-node-portability`](skills/development/skill-development/skill-node-portability/) | Audit Node.js skill dependencies, lockfiles, launchers, and compiled artifacts. |
 | [`skill-python-portability`](skills/development/skill-development/skill-python-portability/) | Audit Python skill imports, PEP 723 metadata, dependencies, and launchers. |
