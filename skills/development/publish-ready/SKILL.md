@@ -39,6 +39,7 @@ Read [`references/prose-humanizer.md`](references/prose-humanizer.md). Tighten e
 
 - Run the build, tests, linters, formatters, and repository-specific validation that actually exist.
 - Execute quickstart commands and documentation examples as written.
+- Include an install-by-name command only when the exact package is already published in that registry under an owner-controlled account. Otherwise omit the command; if setup instructions are needed, use the checked-out source. Never document a hypothetical future registry install.
 - Check for secrets, environment files, absolute local paths, debt markers, and references to deleted files.
 - Confirm that README claims match current behavior.
 - Move aspirations to the project's issue tracker instead of presenting them as shipped features.
