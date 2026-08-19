@@ -33,6 +33,7 @@ Skill Tap is a public collection of portable, reusable skills for agents. It is 
 | [`skill-node-portability`](skills/development/skill-development/skill-node-portability/) | Audit Node.js skill dependencies, lockfiles, launchers, and compiled artifacts. |
 | [`skill-python-portability`](skills/development/skill-development/skill-python-portability/) | Audit Python skill imports, PEP 723 metadata, dependencies, and launchers. |
 | [`skill-refine`](skills/development/skill-development/skill-refine/) | Audit and refine a skill package against the public portability contract. |
+| [`windows-mingw-build`](skills/development/windows-mingw-build/) | Build and troubleshoot portable 32-bit or 64-bit Windows C/C++ artifacts with MinGW-w64. |
 | [`work-product-audit`](skills/development/work-product-audit/) | Find public prose that leaks internal reasoning, defensive framing, or generated-sounding filler. |
 
 ### Productivity

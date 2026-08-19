@@ -1,0 +1,36 @@
+#!/bin/sh
+set -eu
+
+skill_dir=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+script="$skill_dir/scripts/with-win-toolchain.ps1"
+
+case "${1:-}" in
+  -h|--help)
+    cat <<'EOF'
+Select an MSYS2 MinGW or Windows GNU toolchain and optionally run a command.
+
+Usage: windows-mingw-build [-Arch win64|win32] [-Compiler auto|gcc|clang] [options]
+
+PowerShell options:
+  -Command <command>       Run a command with the selected toolchain environment.
+  -TempDir <path>         Use a specific writable compiler temporary directory.
+  -NoStaticRuntime        Do not export static MinGW runtime flags.
+  -Json                   Print the selected toolchain and environment as JSON.
+  -IncludeMsysUsr         Also prepend the MSYS2 usr/bin directory.
+  -Quiet                  Suppress the human-readable environment summary.
+
+Requires PowerShell (pwsh or powershell.exe) for all operations except this help.
+EOF
+    exit 0
+    ;;
+esac
+
+if command -v pwsh >/dev/null 2>&1; then
+  exec pwsh -NoProfile -File "$script" "$@"
+fi
+if command -v powershell.exe >/dev/null 2>&1; then
+  exec powershell.exe -NoProfile -File "$script" "$@"
+fi
+
+echo "windows-mingw-build requires PowerShell (pwsh or powershell.exe)." >&2
+exit 127
