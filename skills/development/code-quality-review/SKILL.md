@@ -17,7 +17,7 @@ Use **cleanup mode** when asked to improve or refactor. Make small, behavior-pre
 
 1. Read manifests, source layout, formatter and linter configuration, tests, and representative execution paths.
 2. Run `bin/code-quality-review <repo>` for a neutral inventory of languages, large files, tests, and debt markers. It follows Git ignore rules by default; use `--include-ignored` only when ignored source is explicitly in scope.
-3. Classify concrete issues with [`references/review-rubric.md`](references/review-rubric.md). Ignore generated, vendored, dependency, build, and minified code unless it is explicitly in scope.
+3. Classify concrete issues with [`references/review-rubric.md`](references/review-rubric.md). For a comment- or docstring-focused request, use [`references/comment-quality.md`](references/comment-quality.md) to distinguish useful rationale from narration, stale claims, and comments compensating for avoidable structure. Ignore generated, vendored, dependency, build, and minified code unless it is explicitly in scope.
 4. When needless machinery is the concern, use [`references/complexity-pruning.md`](references/complexity-pruning.md) to look for deletion and consolidation opportunities without assuming every abstraction is waste.
 5. Prioritize correctness hazards, hidden failure behavior, missing behavioral coverage, and high-cost comprehension problems before cosmetic consistency.
 6. In cleanup mode, follow [`references/safe-refactoring.md`](references/safe-refactoring.md). Preserve public APIs, serialized shapes, persisted data, and externally observable behavior unless migration is explicit.
