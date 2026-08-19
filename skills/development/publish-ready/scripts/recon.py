@@ -80,6 +80,22 @@ SECRET_FILE = re.compile(
     r"(^|/)credentials?(\.|$)",
     re.IGNORECASE,
 )
+REGISTRY_INSTALL = re.compile(
+    r"\b(?:"
+    # -r/-e take a PATH, not a package name: `pip install -r requirements.txt`
+    # is an instruction about this checkout, not a claim that a registry has it.
+    r"(?:(?:python3?|py)\s+-m\s+)?pip3?\s+install"
+    r"(?!\s+(?:-r|-e|--requirement|--editable)\b)"
+    r"(?:\s+--?[\w-]+(?:=\S+)?)?\s+[\"']?[A-Za-z0-9][\w.-]*(?=[\s\"';&|]|$)|"
+    r"pipx\s+install\s+[\"']?[A-Za-z0-9][\w.-]*(?=[\s\"';&|]|$)|"
+    r"uv\s+(?:add|tool\s+install)\s+[\"']?[A-Za-z0-9][\w.-]*(?=[\s\"';&|]|$)|"
+    r"(?:npm\s+install|pnpm\s+add|yarn\s+add)\s+(?:-[gD]\s+)?[\"']?(?:@[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+|[A-Za-z0-9][\w.-]*)(?=[\s\"';&|]|$)|"
+    r"cargo\s+install\s+[\"']?[A-Za-z0-9][\w-]*(?=[\s\"';&|]|$)|"
+    r"gem\s+install\s+[\"']?[A-Za-z0-9][\w-]*(?=[\s\"';&|]|$)|"
+    r"go\s+install\s+[\"']?[A-Za-z0-9][\w./-]*@[^\s;&|]+"
+    r")",
+    re.IGNORECASE,
+)
 
 
 def tracked_files(root: Path) -> tuple[list[Path], bool]:
@@ -136,6 +152,7 @@ def collect(root: Path) -> dict[str, list[str]]:
         "Absolute local paths": [],
         "Possible secrets": [],
         "Generated-sounding prose": [],
+        "Install-by-name claims (verify release)": [],
         "Documentation spread": [],
         "Large files": [],
     }
@@ -167,6 +184,10 @@ def collect(root: Path) -> dict[str, list[str]]:
                 sections["Possible secrets"].append(f"{location}: suspected secret value (redacted)")
             if path.suffix.lower() in DOC_SUFFIXES and SLOP.search(stripped):
                 sections["Generated-sounding prose"].append(f"{location}: {stripped[:180]}")
+            if path.suffix.lower() in DOC_SUFFIXES and REGISTRY_INSTALL.search(stripped):
+                sections["Install-by-name claims (verify release)"].append(
+                    f"{location}: {stripped[:180]}"
+                )
     return sections
 
 
