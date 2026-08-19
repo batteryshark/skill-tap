@@ -16,8 +16,9 @@ Explain a repository as a working system, not a file list. Lead with the most us
 5. Investigate distinctive behavior from code evidence. Search broadly, then read the surrounding implementation before making a claim.
 6. If risk analysis is in scope, describe observable security and privacy boundaries without exposing credential values or asserting exploitable behavior from static hints alone.
 7. For contributor-facing documentation, verify discoverable setup, commands, entry points, project structure, and safe-change guidance with [`references/onboarding-docs.md`](references/onboarding-docs.md). Do not claim a command works unless it was reproduced or clearly label it as documented-only.
-8. Draft with [`references/writeup-structure.md`](references/writeup-structure.md), omitting sections that genuinely do not apply.
-9. Fact-check every concrete claim against files, symbols, configuration, tests, or reproduced behavior.
+8. When the request is to audit stale documentation or reconcile stated intent with the implemented system, use [`references/intent-reconciliation.md`](references/intent-reconciliation.md). Do not treat every mismatch as a code defect or silently rewrite historical rationale.
+9. Draft with [`references/writeup-structure.md`](references/writeup-structure.md), omitting sections that genuinely do not apply.
+10. Fact-check every concrete claim against files, symbols, configuration, tests, or reproduced behavior.
 
 ## Evidence rules
 
@@ -30,6 +31,6 @@ Explain a repository as a working system, not a file list. Lead with the most us
 
 ## Output
 
-Produce a self-contained writeup for the stated audience. Include a short scope note and confidence limits so a reader knows what the analysis establishes. For onboarding guides, make the first successful verification path and the likely first change discoverable without duplicating reference material already maintained elsewhere.
+Produce a self-contained writeup for the stated audience. Include a short scope note and confidence limits so a reader knows what the analysis establishes. For onboarding guides, make the first successful verification path and the likely first change discoverable without duplicating reference material already maintained elsewhere. For reconciliation audits, return a claim matrix and an action for each material mismatch.
 
 Use [`agents/researcher.md`](agents/researcher.md) for the evidence pass, [`agents/onboarding-editor.md`](agents/onboarding-editor.md) for contributor documentation, and [`agents/fact-checker.md`](agents/fact-checker.md) for an independent claim audit.
