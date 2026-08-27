@@ -1,0 +1,85 @@
+# Model roster — the shared artifact between the three orchestration skills.
+#
+#   model-fitness  writes entries here (tier_ceiling, budgets, cost_index)
+#   tier-plan      reads it to know which grid cells are actually reachable
+#   orchestrate    reads it to dispatch
+#
+# Copy to .orchestration/roster.yaml in your project and edit.
+
+# Approximate billable tokens per delegation for your setup: the contract plus
+# the artifacts the receiver must read, plus the return plus verification.
+# Used for the split-vs-merge break-even in references/economics.md.
+# Measure this once instead of guessing — every threshold keys off it.
+handoff_tax: 3000
+
+models:
+  - id: fast
+    # How to dispatch. Whatever your mechanism needs to identify this model.
+    invoke:
+      via: agent           # agent | workflow | bash
+      model: <small-model-id>
+    tier_ceiling: 1        # highest tier this model may be routed to
+    budgets: [minimal, moderate]
+    cost_index: 1          # relative to the cheapest entry; not dollars, so it
+                           # does not go stale when prices move
+    honest_failure: true   # REQUIRED for any loop delegation. Reports failure
+                           # rather than claiming success. See model-fitness P3.
+    notes: >
+      Reliable tool calling and exact formatting. Does not infer intent —
+      anything unstated gets filled with something plausible and wrong.
+      No usable deep reasoning mode.
+
+  - id: mid
+    invoke:
+      via: agent
+      model: <mid-model-id>
+    tier_ceiling: 2
+    budgets: [minimal, moderate, deep]
+    cost_index: 6
+    honest_failure: true
+    notes: >
+      Good heuristics and summarization. Needs a closed rubric and an explicit
+      out-of-scope list or it over-builds.
+
+  - id: lead
+    invoke:
+      via: agent
+      model: <large-model-id>
+    tier_ceiling: 3
+    budgets: [minimal, moderate, deep]
+    cost_index: 30
+    honest_failure: true
+    notes: >
+      Orchestration, root cause, synthesis. Keep it out of implementation work.
+
+  # External model reached through a CLI. The orchestrator writes the brief to a
+  # file, runs the command, and reads the artifact back — keeping large returns
+  # out of orchestrator context.
+  - id: external
+    invoke:
+      via: bash
+      command: "<your-cli> --model <id> --prompt-file {brief} --out {artifact}"
+      budget_flag: "--reasoning {level}"   # omit if the model has no such dial
+    tier_ceiling: 2
+    budgets: [minimal, deep]
+    cost_index: 4
+    honest_failure: true
+    notes: >
+      No moderate setting — routes moderate units to deep, so it is only worth
+      it when the unit is large enough to absorb that.
+
+# Optional. Overrides the "cheapest ceiling that meets the tier" default when a
+# particular unit shape has burned you before. Keep this list short; it is a
+# record of measured surprises, not a place to encode hunches.
+pins:
+  - shape: "regex / parser construction"
+    route: {model: fast, budget: deep}
+    why: >
+      Narrow, wide branch factor, strong check. Cheap model with room to think
+      and a test to land on beats the expensive model at a fraction of the cost.
+
+  - shape: "credential or infra rotation"
+    route: {model: lead, budget: moderate}
+    why: >
+      Steps are fully specified, so it scores as T2 — but nothing verifies it and
+      a mistake takes production down. The blast-radius override applies.
