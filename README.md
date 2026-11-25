@@ -1,5 +1,7 @@
 # Skill Tap
 
+> **Archived (August 2026).** A snapshot of the collection as it stood, no longer maintained. My skills now live in a private toolkit, so issues and pull requests here will not be picked up.
+
 <p align="center">
   <img src="assets/skills-tap-480.png" width="480" alt="Skill Tap — a retro comic-book mascot">
 </p>
